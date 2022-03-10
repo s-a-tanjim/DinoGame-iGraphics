@@ -1,8 +1,11 @@
+#include<iostream>
 #include "iGraphics.h"
 #include "all_variables.h"
 #include "displayFunctions.h"
+#include "gamePlayFunc.h"
 int mposx,  mposy;
 
+using namespace std;
 
 /*
 	function iDraw() is called again and again by the system.
@@ -13,18 +16,19 @@ void iDraw()
 	iClear();
 	iSetColor(255, 255, 255);
 	iFilledRectangle(0, 0, windowWidth, windowHeight);
-	if (showInitDisplay){
+	if (showInfoDsiplay){
+		showInfoDisplay();
+	}
+	else if (showInitDisplay){
 		initDisplay();
 	}
+	else if (GameOverFlag){
+		showGameOverMsg();
+	}
 	else {
-		initialGroundPoint -= 0.1;
-		if (initialGroundPoint == -90.0)
-			initialGroundPoint = 0;
-
-		plotLandImg();
-
-		iFilledRectangle(0, BaseHeight, 90, BaseHeight + 40);
-		iFilledRectangle(windowWidth - 90, BaseHeight, windowWidth, BaseHeight + 40);
+		PlayGame();
+		UserScore++;
+		//cout << dinoBaseHeight << endl;
 	}
 	
 }
@@ -46,7 +50,14 @@ void iMouse(int button, int state, int mx, int my)
 {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		//place your codes here
+		//cout<<mx<<"  "<<my<<endl;
+		if (mx>=275 && mx<=355 && my>=100 && my<=180 && showInitDisplay) {
+			showInitDisplay = false;
+		}
+		else if (mx >= 570 && mx <= 605 && my >= 25 && my <= 60 && showInitDisplay) {
+			showInfoDsiplay = true;
+		} else if (showInfoDsiplay)
+			showInfoDsiplay = false;
 	}
 	if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
@@ -77,6 +88,25 @@ void iKeyboard(unsigned char key)
 	{
 		//do something with 'q'
 	}
+	else if (key == ' '){
+		if (GameOverFlag){
+			RestartGame();
+		}
+		else if (showInfoDsiplay){
+			showInfoDsiplay = false;
+		}
+		else {
+			jumping = true;
+		}
+	}
+	else if (key == 'm' || key == 'M'){
+		MusicOn = false;
+		PlaySound(0, 0, 0);
+	}
+	else {
+		if (MusicOn)
+			PlaySound(L"music\\music.wav", NULL, SND_LOOP);
+	}
 	//place your codes for other keys here
 }
 
@@ -101,6 +131,7 @@ void iSpecialKeyboard(unsigned char key)
 //
 int main()
 {
+	
 	//place your own initialization codes here.
 	iInitialize(windowWidth, windowHeight, "Dino Game");
 	

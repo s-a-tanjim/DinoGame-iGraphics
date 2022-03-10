@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="all_variables.h" />
     <ClInclude Include="displayFunctions.h" />
+    <ClInclude Include="gamePlayFunc.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{92740327-A17F-4C22-9DD6-98A0757C4B3B}</ProjectGuid>

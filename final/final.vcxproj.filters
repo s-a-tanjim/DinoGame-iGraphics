@@ -26,5 +26,8 @@
     <ClInclude Include="displayFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gamePlayFunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,9 +15,21 @@ void plotLandImg(){
 	iShowBMP(initialGroundPoint+(groundWidth * 6), BaseHeight, ground_img[0]);
 	//BG 8
 	iShowBMP(initialGroundPoint + (groundWidth * 7), BaseHeight, ground_img[2]);
-
+	//BG 9
+	iShowBMP(initialGroundPoint + (groundWidth * 8), BaseHeight, ground_img[0]);
 
 	//iShowBMP(50, 50, dino_img[0]);
+}
+
+void showGameOverMsg(){
+	iSetColor(0, 0, 0);
+	iText(260, 250, "Game Over!", GLUT_BITMAP_TIMES_ROMAN_24);
+	iText(255, 230, "Press SPACE to Continue!", GLUT_BITMAP_HELVETICA_10);
+}
+
+
+void plotDinoImg(){
+	iShowBMP(initialDinoPoint, dinoBaseHeight, dino_img[0]);
 }
 
 
@@ -71,9 +83,14 @@ char* addScoreText(char *str){
 	arr1[14] = ' ';
 
 	int i = 15;
-	for (; i < len + 15;i++)
-		arr1[i] = 
+	for (int j = 0; j < len; j++){
+		arr1[i] = str[j];
+		i++;
+	}
+	arr1[i] = '\0';
+		
 
+	return arr1;
 }
 
 void initDisplay(){
@@ -85,8 +102,18 @@ void initDisplay(){
 	iShowBMP(275, 100, "bitmaps\\others\\play.bmp");
 
 	char *score_print = convertIntegerToChar(HIGHEST_SCORE);
-	iText(25, 35, score_print, GLUT_BITMAP_8_BY_13);
+	char *temp = addScoreText(score_print);
+	iText(25, 35, temp, GLUT_BITMAP_8_BY_13);
 
 	iShowBMP(570, 25, "bitmaps\\others\\info.bmp");
 
+}
+
+void showInfoDisplay(){
+	iSetColor(0, 0, 0);
+	iText(270, 320, "About", GLUT_BITMAP_TIMES_ROMAN_24);
+	iText(222, 230, "Control: Press SPACE to JUMP", GLUT_BITMAP_HELVETICA_10);
+	iText(220, 210, "Created By: Shoeb Ahmed Tanjim", GLUT_BITMAP_HELVETICA_10);
+
+	iText(250, 100, "Press SPACE to Exit", GLUT_BITMAP_HELVETICA_10);
 }
